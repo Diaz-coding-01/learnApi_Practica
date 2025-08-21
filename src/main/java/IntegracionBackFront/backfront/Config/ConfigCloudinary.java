@@ -23,7 +23,7 @@ public class ConfigCloudinary {
         Map<String, String> config = new HashMap<>();
 
         //Obteniendo las credenciales desde las variables de entorno
-        config.put("cloud_name", objDotenv.get("CLOUDINARY_NAME"));
+        config.put("cloud_name", objDotenv.get("CLOUDINARY_CLOUD_NAME"));
         config.put("api_key", objDotenv.get("CLOUDINARY_API_KEY"));
         config.put("api_secret", objDotenv.get("CLOUDINARY_API_SECRET"));
 
