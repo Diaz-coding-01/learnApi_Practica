@@ -31,7 +31,23 @@ public class ControllerImage {
                     "url", imageUrl
             ));
         } catch (IOException e) {
-            return ResponseEntity.internalServerError().body("Error al subir la imágen");
+            return ResponseEntity.internalServerError().body("Error al subir la imagen");
+        }
+    }
+
+    @PostMapping("/uploadToFolder")
+    public ResponseEntity<?> uploadImageToFolder(
+            @RequestParam("image") MultipartFile file,
+            @RequestParam String folder
+    ){
+        try {
+            String imageUrl = serviceImage.uploadImage(file, folder);
+            return ResponseEntity.ok(Map.of(
+                    "message", "Imagen subida correctamente",
+                    "url", imageUrl
+            ));
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().body("Error al subir la imagen");
         }
     }
 }

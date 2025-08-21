@@ -31,4 +31,5 @@ public class ProductDTO {
     private LocalDate fechaIngreso;
     private Long categoriaId;
     private int usuarioId; //Usuario que lo registro
+    private String imagenUrl; //ALTER TABLE Productos ADD (IMAGEN_URL VARCHAR2(120) NULL);
 }

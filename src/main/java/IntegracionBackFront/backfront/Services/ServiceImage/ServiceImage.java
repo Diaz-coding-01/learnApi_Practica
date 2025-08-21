@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class ServiceImage {
@@ -33,6 +34,26 @@ public class ServiceImage {
                         "quality", "auto:good"
                 ));
 
+        return (String) uploadResult.get("secure_url");
+    }
+
+    public String uploadImage(MultipartFile file, String folder) throws IOException{
+        validateImage(file);
+        String originalFileName = file.getOriginalFilename();
+        String extension = file.getOriginalFilename().substring(originalFileName.lastIndexOf(".")).toLowerCase();
+        String uniqueFileName = "img" + UUID.randomUUID() + extension;
+
+        Map<String, Object> opctions = ObjectUtils.asMap(
+                "folder", folder,
+                "public_id", uniqueFileName, //Nombre único para el archivo
+                "use_filename", false,       //No usar el nombre original
+                "unique_filename", false,    //No generar nombre único (Ya lo hacemos de manera manual)
+                "overwrite", false,          //No sobreescribir archivos existentes
+                "resource_type", "auto",
+                "quality", "auto:good"
+        );
+
+        Map<?, ?> uploadResult = cloudinary.uploader().upload(file.getBytes(), opctions);
         return (String) uploadResult.get("secure_url");
     }
 
